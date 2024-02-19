@@ -33,23 +33,21 @@ function template(tag: string) {
     ...args: V[]
   ) => {
     const eventObj = createVNode.addEvent;
-    return h("div#app", {}, [
-      h(
-        tag,
-        {
-          hook: {
-            update: () => console.log("Component updated!"),
-            insert: () => console.log("Component Mounted"),
-          },
-          on: eventObj ? { [eventObj.eventType]: eventObj.eventCallback } : {},
+    return h(
+      tag,
+      {
+        hook: {
+          update: () => console.log("Component updated!"),
+          insert: () => console.log("Component Mounted"),
         },
-        templateString.reduce(
-          (acc, initialString, index) =>
-            acc + initialString + (args[index] || ""),
-          ""
-        )
-      ),
-    ]);
+        on: eventObj ? { [eventObj.eventType]: eventObj.eventCallback } : {},
+      },
+      templateString.reduce(
+        (acc, initialString, index) =>
+          acc + initialString + (args[index] || ""),
+        ""
+      )
+    );
   };
   return createVNode;
 }
